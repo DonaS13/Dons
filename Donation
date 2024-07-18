@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+struct Donor {
+    char name[50];
+    int donationAmount;
+};
+
+void generateReceipt(struct Donor donor) {
+    printf("Receipt for Donation\n");
+    printf("Name: %s\n", donor.name);
+    printf("Donation Amount: $%d\n", donor.donationAmount);
+    printf("\n");
+}
+
+int main() {
+    int n;
+    printf("Enter the number of donors: ");
+    scanf("%d", &n);
+
+    struct Donor donors[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter Donor %d Name: ", i + 1);
+        scanf("%s", donors[i].name);
+        printf("Enter Donation Amount: $");
+        scanf("%d", &donors[i].donationAmount);
+    }
+
+    printf("\nDonation Receipts:\n");
+    for (int i = 0; i < n; i++) {
+        generateReceipt(donors[i]);
+    }
+
+    return 0;
+}
