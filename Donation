@@ -1,35 +1,57 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Donor {
     char name[50];
     int donationAmount;
 };
 
-void generateReceipt(struct Donor donor) {
-    printf("Receipt for Donation\n");
-    printf("Name: %s\n", donor.name);
-    printf("Donation Amount: $%d\n", donor.donationAmount);
-    printf("\n");
-}
+void addDonation(struct Donor donors[], int *donorCount);
+void generateReceipts(struct Donor donors[], int donorCount);
 
 int main() {
-    int n;
-    printf("Enter the number of donors: ");
-    scanf("%d", &n);
+    struct Donor donors[100];
+    int donorCount = 0;
+    int choice;
 
-    struct Donor donors[n];
+    do {
+        printf("\n--- Charitable Donations Management System ---\n");
+        printf("1. Add Donation\n");
+        printf("2. Generate Receipts\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    for (int i = 0; i < n; i++) {
-        printf("Enter Donor %d Name: ", i + 1);
-        scanf("%s", donors[i].name);
-        printf("Enter Donation Amount: $");
-        scanf("%d", &donors[i].donationAmount);
-    }
-
-    printf("\nDonation Receipts:\n");
-    for (int i = 0; i < n; i++) {
-        generateReceipt(donors[i]);
-    }
+        switch (choice) {
+            case 1:
+                addDonation(donors, &donorCount);
+                break;
+            case 2:
+                generateReceipts(donors, donorCount);
+                break;
+            case 3:
+                printf("Exiting the program. Thank you!\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
 
     return 0;
+}
+
+void addDonation(struct Donor donors[], int *donorCount) {
+    printf("\nEnter donor name: ");
+    scanf("%s", donors[*donorCount].name);
+    printf("Enter donation amount: ");
+    scanf("%d", &donors[*donorCount].donationAmount);
+    (*donorCount)++;
+    printf("Donation added successfully!\n");
+}
+
+void generateReceipts(struct Donor donors[], int donorCount) {
+    printf("\n--- Donation Receipts ---\n");
+    for (int i = 0; i < donorCount; i++) {
+        printf("Donor: %s, Donation Amount: $%d\n", donors[i].name, donors[i].donationAmount);
+    }
 }
